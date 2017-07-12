@@ -37,6 +37,10 @@ body {
 	font-weight: 200;
 }
 
+.text-center {
+	text-align: center;
+}
+
 ul {
 	padding: 0;
 }
@@ -72,7 +76,7 @@ a.button:hover {
 }
 
 .button:active {
-	transform: translate(2px);
+	transform: translate(1px);
 }
 
 ul.nav {
@@ -136,4 +140,17 @@ ul.space-list-items {
 img.avatar {
 	width: 150px;
 	border-radius: 50%;
+}
+
+.reset {
+	border: none;
+	background: transparent;
+	color: #d0021b;
+	display: block;
+	width: 100%;
+	text-align: center;
+}
+
+.reset:hover {
+	cursor: pointer;
 }

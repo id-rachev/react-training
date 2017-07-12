@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import PlayerPreview from './PlayerPreview';
 
 class PlayerInput extends Component {
 	constructor(props) {
@@ -66,6 +68,7 @@ export default class Battle extends Component {
 		}
 
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleReset = this.handleReset.bind(this);
 	}
 
 	handleSubmit(id, username) {
@@ -77,24 +80,73 @@ export default class Battle extends Component {
 		});
 	}
 
+	handleReset(id, username) {
+		this.setState(() => {
+			var newState = {};
+			newState[id + 'Name'] = '';
+			newState[id + 'Image'] = null;
+			return newState;
+		});
+	}
+
 	render() {
+		var playerOneName = this.state.playerOneName;
+		var playerTwoName = this.state.playerTwoName;
+		var match = this.props.match;
 		return (
 			<div>
 				<div className="row">
-					{!this.state.playerOneName &&
+					{!playerOneName &&
 						<PlayerInput 
 							id='playerOne'
 							label='Player One'
 							onSubmit={this.handleSubmit} />
 					}
 
-					{!this.state.playerTwoName &&
+					{playerOneName !== '' &&
+						<PlayerPreview
+							avatar={this.state.playerOneImage}
+							username={playerOneName}
+						>
+							<button
+								className="reset"
+								onClick={this.handleReset.bind(null, 'playerOne')}>
+									Reset
+							</button>
+						</PlayerPreview>
+					}
+
+					{!playerTwoName &&
 						<PlayerInput 
 							id='playerTwo'
 							label='Player Two'
 							onSubmit={this.handleSubmit} />
 					}
+
+					{playerTwoName !== '' &&
+						<PlayerPreview
+							avatar={this.state.playerTwoImage}
+							username={playerTwoName}
+						>
+							<button
+								className="reset"
+								onClick={this.handleReset.bind(null, 'playerTwo')}>
+									Reset
+							</button>
+						</PlayerPreview>
+					}
 				</div>
+
+				{playerOneName && playerTwoName &&
+					<Link
+						className="button"
+						to={{
+							pathname: match.url + '/results',
+							search: `?playerOneName=${playerOneName}&playerTwoName=${playerTwoName}`
+						}}>
+						Battle
+					</Link>
+				}
 			</div>
 		)
 	}
