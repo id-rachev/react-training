@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import api from '../utils/api';
+import Loading from './Loading';
 
 function SelectLanguage(props) {
 	const languages = ['All', 'JavaScript', 'Ruby', 'CSharp', 'Java', 'CSS', 'Pyton'];
@@ -22,7 +23,7 @@ function SelectLanguage(props) {
 
 function ReposGrid(props) {
 	if(props.repos == null) {
-		return <div>Loading...</div>
+		return <Loading />
 	}
 	return (
 		<ul className="popular-list">
